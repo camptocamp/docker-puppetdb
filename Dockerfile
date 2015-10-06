@@ -22,4 +22,7 @@ RUN sed -i -E 's@^(#\s*)ssl-key = .*@ssl-key = /etc/puppetlabs/puppetdb/ssl/priv
 RUN sed -i -E 's@^(#\s*)ssl-cert = .*@ssl-cert = /etc/puppetlabs/puppetdb/ssl/public.pem@' /etc/puppetlabs/puppetdb/conf.d/jetty.ini
 RUN sed -i -E 's@^(#\s*)ssl-ca-cert = .*@ssl-ca-cert = /etc/puppetlabs/puppetdb/ssl/ca.pem@' /etc/puppetlabs/puppetdb/conf.d/jetty.ini
 
+# Allow JAVA_ARGS tuning
+RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
+
 ENTRYPOINT ["/opt/puppetlabs/server/bin/puppetdb", "foreground"]

@@ -8,6 +8,8 @@ RUN apt-get update \
   && apt-get install -y puppetdb=$PUPPETDB_VERSION \
   && rm -rf /var/lib/apt/lists/*
 
+ADD puppetdb.sh /usr/local/sbin/puppetdb.sh
+
 # TODO: use augeas
 RUN sed -i -e 's/^classname = .*/classname = org.postgresql.Driver/' /etc/puppetlabs/puppetdb/conf.d/database.ini
 RUN sed -i -e 's/^subprotocol = .*/subprotocol = postgresql/' /etc/puppetlabs/puppetdb/conf.d/database.ini
@@ -25,4 +27,4 @@ RUN sed -i -E 's@^(#\s*)ssl-ca-cert = .*@ssl-ca-cert = /etc/puppetlabs/puppetdb/
 # Allow JAVA_ARGS tuning
 RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
-ENTRYPOINT ["/opt/puppetlabs/server/bin/puppetdb", "foreground"]
+ENTRYPOINT ["puppetdb.sh"]

@@ -2,7 +2,7 @@ FROM camptocamp/puppet-agent:1.2.6-1
 
 MAINTAINER mickael.canevet@camptocamp.com
 
-ENV PUPPETDB_VERSION 3.1.0-1puppetlabs1
+ENV PUPPETDB_VERSION 3.2.0-1puppetlabs1
 
 RUN apt-get update \
   && apt-get install -y puppetdb=$PUPPETDB_VERSION \

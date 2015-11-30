@@ -44,13 +44,13 @@ RUN sed -i -E 's@^(#\s*)ssl-ca-cert = .*@ssl-ca-cert = /etc/puppetlabs/puppetdb/
 RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
 # Configure Log appenders
-ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/${JACKSON_VERSION}/jackson-annotations-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetserver/
-ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/${JACKSON_VERSION}/jackson-core-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetserver/
-ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/${JACKSON_VERSION}/jackson-databind-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetserver/
-ADD http://central.maven.org/maven2/net/logstash/logback/logstash-logback-encoder/4.5.1/logstash-logback-encoder-4.5.1.jar /opt/puppetlabs/server/apps/puppetserver/
-ADD http://central.maven.org/maven2/com/github/juise/logstash-logback-layout/1.0/logstash-logback-layout-1.0.jar /opt/puppetlabs/server/apps/puppetserver/
+ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/${JACKSON_VERSION}/jackson-annotations-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetdb/
+ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/${JACKSON_VERSION}/jackson-core-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetdb/
+ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/${JACKSON_VERSION}/jackson-databind-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetdb/
+ADD http://central.maven.org/maven2/net/logstash/logback/logstash-logback-encoder/4.5.1/logstash-logback-encoder-4.5.1.jar /opt/puppetlabs/server/apps/puppetdb/
+ADD http://central.maven.org/maven2/com/github/juise/logstash-logback-layout/1.0/logstash-logback-layout-1.0.jar /opt/puppetlabs/server/apps/puppetdb/
 
-RUN chmod +r /opt/puppetlabs/server/apps/puppetserver/*.jar
+RUN chmod +r /opt/puppetlabs/server/apps/puppetdb/*.jar
 
 COPY logback.xml /etc/puppetlabs/puppetdb/
 COPY request-logging.xml /etc/puppetlabs/puppetdb/

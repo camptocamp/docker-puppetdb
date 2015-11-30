@@ -1,14 +1,28 @@
-FROM camptocamp/puppet-agent:1.2.7-1jessie
+FROM debian:jessie
 
 MAINTAINER mickael.canevet@camptocamp.com
 
+ENV RELEASE=jessie
+
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+
 ENV PUPPETDB_VERSION 3.2.0-1puppetlabs1
+
+ENV PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
+
+RUN apt-get update \
+  && apt-get install -y curl locales-all \
+  && curl -O http://apt.puppetlabs.com/puppetlabs-release-pc1-${RELEASE}.deb \
+  && dpkg -i puppetlabs-release-pc1-${RELEASE}.deb \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
   && apt-get install -y puppetdb=$PUPPETDB_VERSION \
   && rm -rf /var/lib/apt/lists/*
 
-ADD puppetdb.sh /usr/local/sbin/puppetdb.sh
+COPY puppetdb.sh /usr/local/sbin/puppetdb.sh
 
 # TODO: use augeas
 RUN sed -i -e 's/^classname = .*/classname = org.postgresql.Driver/' /etc/puppetlabs/puppetdb/conf.d/database.ini

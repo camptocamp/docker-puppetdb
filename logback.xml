@@ -1,0 +1,49 @@
+<configuration scan="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %-5p [%c{2}] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/puppetlabs/puppetdb/puppetdb.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/var/log/puppetlabs/puppetdb/puppetdb-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5p [%c{2}] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/puppetlabs/puppetdb/puppetdb.log.json</file>
+  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/var/log/puppetlabs/puppetdb/puppetdb.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+  
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <fieldNames>
+                <timestamp>timegenerated</timestamp>
+                <message>logmsg</message>
+            </fieldNames>
+        </encoder>
+    </appender>
+
+    <!-- Supress internal ActiveMQ logging -->
+    <logger name="org.apache.activemq" level="warn"/>
+
+    <!-- Supress internal Spring Framework logging -->
+    <logger name="org.springframework.jms.connection" level="warn"/>
+
+    <!-- Lower the log level for ActiveMQ KahaDB MessageDatabase -->
+    <logger name="org.apache.activemq.store.kahadb.MessageDatabase"
+        level="info"/>
+
+    <root level="info">
+        <appender-ref ref="${logappender}" />
+    </root>
+</configuration>

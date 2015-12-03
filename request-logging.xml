@@ -19,10 +19,10 @@
     </appender>
 
     <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/var/log/puppetlabs/puppetserver/puppetserver-access.log.json</file>
+        <file>/var/log/puppetlabs/puppetdb/puppetdb-access.log.json</file>
   
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/var/log/puppetlabs/puppetserver/puppetserver-access.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>/var/log/puppetlabs/puppetdb/puppetdb-access.log.%d{yyyy-MM-dd}</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
   

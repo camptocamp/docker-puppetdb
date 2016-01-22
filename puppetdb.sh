@@ -9,4 +9,7 @@ if test -n "${NODE_PURGE_TTL}"; then
   echo "node-purge-ttl = ${NODE_PURGE_TTL}" >> /etc/puppetlabs/puppetdb/conf.d/database.ini
 fi
 
+# Fix ssl configuration
+/opt/puppetlabs/server/apps/puppetdb/cli/apps/ssl-setup
+
 exec /opt/puppetlabs/server/bin/puppetdb foreground

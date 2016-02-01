@@ -20,6 +20,7 @@ RUN apt-get update \
   && apt-get install -y curl locales-all \
   && curl -O http://apt.puppetlabs.com/puppetlabs-release-pc1-${RELEASE}.deb \
   && dpkg -i puppetlabs-release-pc1-${RELEASE}.deb \
+  && rm puppetlabs-release-pc1-${RELEASE}.deb \
   && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \

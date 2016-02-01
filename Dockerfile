@@ -29,6 +29,9 @@ RUN apt-get update \
 
 COPY puppetdb.sh /usr/local/sbin/puppetdb.sh
 
+# Setting
+RUN puppet config set certname puppetdb --section agent
+
 # TODO: use augeas
 RUN sed -i -e 's/^classname = .*/classname = org.postgresql.Driver/' /etc/puppetlabs/puppetdb/conf.d/database.ini
 RUN sed -i -e 's/^subprotocol = .*/subprotocol = postgresql/' /etc/puppetlabs/puppetdb/conf.d/database.ini

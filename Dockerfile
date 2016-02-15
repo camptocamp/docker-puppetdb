@@ -27,8 +27,6 @@ RUN apt-get update \
   && apt-get install -y puppetdb=$PUPPETDB_VERSION \
   && rm -rf /var/lib/apt/lists/*
 
-COPY puppetdb.sh /usr/local/sbin/puppetdb.sh
-
 # Setting
 RUN puppet config set certname puppetdb --section agent
 
@@ -62,4 +60,8 @@ COPY request-logging.xml /etc/puppetlabs/puppetdb/
 
 RUN sed -i "s@\(puppetdb.jar\)@\1:\$\{INSTALL_DIR\}/logstash-logback-encoder-4.5.1.jar:\$\{INSTALL_DIR\}/logstash-logback-layout-1.0.jar:\$\{INSTALL_DIR\}/jackson-annotations-${JACKSON_VERSION}.jar:\$\{INSTALL_DIR\}/jackson-core-${JACKSON_VERSION}.jar:\$\{INSTALL_DIR\}/jackson-databind-${JACKSON_VERSION}.jar@" /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
 
-ENTRYPOINT ["puppetdb.sh"]
+# Configure entrypoint
+COPY /docker-entrypoint.sh /
+COPY /docker-entrypoint.d/* /docker-entrypoint.d/
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["puppetdb", "foreground"]

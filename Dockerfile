@@ -28,7 +28,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Setting
-RUN puppet config set certname puppetdb --section agent
+RUN puppet config set dns_alt_names puppetdb --section agent
 
 # TODO: use augeas
 RUN sed -i -e 's/^classname = .*/classname = org.postgresql.Driver/' /etc/puppetlabs/puppetdb/conf.d/database.ini

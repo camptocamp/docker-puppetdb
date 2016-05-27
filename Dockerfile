@@ -33,7 +33,7 @@ RUN puppet config set dns_alt_names puppetdb --section agent
 # TODO: use augeas
 RUN sed -i -e 's/^classname = .*/classname = org.postgresql.Driver/' /etc/puppetlabs/puppetdb/conf.d/database.ini
 RUN sed -i -e 's/^subprotocol = .*/subprotocol = postgresql/' /etc/puppetlabs/puppetdb/conf.d/database.ini
-RUN sed -i -e 's@^subname = .*@subname = //postgresql:5432/puppetdb@' /etc/puppetlabs/puppetdb/conf.d/database.ini
+RUN sed -i -E 's@^(#\s*)subname = .*@subname = //postgresql:5432/puppetdb@' /etc/puppetlabs/puppetdb/conf.d/database.ini
 RUN sed -i -E 's@^(#\s*)username = .*@username = puppetdb@' /etc/puppetlabs/puppetdb/conf.d/database.ini
 RUN sed -i -E 's@^(#\s*)password = .*@password = puppetdb@' /etc/puppetlabs/puppetdb/conf.d/database.ini
 

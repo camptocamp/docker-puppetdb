@@ -54,19 +54,6 @@ RUN printf 'set /augeas/context /files/etc/default/puppetdb \n\
   print . \n\
   ' | augtool -Ast "Shellvars.lns incl /etc/default/puppetdb"
 
-# Configure Log appenders
-ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/${JACKSON_VERSION}/jackson-annotations-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetdb/
-ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/${JACKSON_VERSION}/jackson-core-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetdb/
-ADD http://central.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/${JACKSON_VERSION}/jackson-databind-${JACKSON_VERSION}.jar /opt/puppetlabs/server/apps/puppetdb/
-ADD http://central.maven.org/maven2/net/logstash/logback/logstash-logback-encoder/4.5.1/logstash-logback-encoder-4.5.1.jar /opt/puppetlabs/server/apps/puppetdb/
-
-RUN chmod +r /opt/puppetlabs/server/apps/puppetdb/*.jar
-
-COPY logback.xml /etc/puppetlabs/puppetdb/
-COPY request-logging.xml /etc/puppetlabs/puppetdb/
-
-RUN sed -i "s@\(puppetdb.jar\)@\1:\$\{INSTALL_DIR\}/logstash-logback-encoder-4.5.1.jar:\$\{INSTALL_DIR\}/logstash-logback-layout-1.0.jar:\$\{INSTALL_DIR\}/jackson-annotations-${JACKSON_VERSION}.jar:\$\{INSTALL_DIR\}/jackson-core-${JACKSON_VERSION}.jar:\$\{INSTALL_DIR\}/jackson-databind-${JACKSON_VERSION}.jar@" /opt/puppetlabs/server/apps/puppetdb/cli/apps/foreground
-
 # Configure entrypoint
 COPY docker-entrypoint.sh /
 COPY docker-entrypoint.d/* /docker-entrypoint.d/

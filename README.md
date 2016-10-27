@@ -5,8 +5,7 @@ PuppetDB Docker image
 [![Build Status](https://img.shields.io/travis/camptocamp/docker-puppetdb/master.svg)](https://travis-ci.org/camptocamp/docker-puppetdb)
 [![By Camptocamp](https://img.shields.io/badge/by-camptocamp-fb7047.svg)](http://www.camptocamp.com)
 
-Available environment variables:
---------------------------------
+## Available environment variables:
 
 ### ENABLE_HTTP
 
@@ -24,3 +23,15 @@ Set `node-purge-ttl` with:
 docker run --rm -e NODE_PURGE_TTL='15d' camptocamp/puppetdb
 ```
 
+### Postgresql credentials
+
+* POSTGRESQL_SUBNAME
+* POSTGRESQL_USER
+* POSTGRESQL_PASSWORD
+
+
+Optionally specify a read database:
+
+* POSTGRESQL_RO_SUBNAME
+* POSTGRESQL_RO_USER, defaults to POSTGRESQL_USER
+* POSTGRESQL_PASSWORD, defaults to POSTGRESQL_PASSWORD

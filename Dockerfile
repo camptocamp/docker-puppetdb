@@ -12,6 +12,9 @@ ENV LANG=en_US.UTF-8
 
 ENV PUPPETDB_VERSION 4.2.2-1puppetlabs1
 
+ENV POSTGRES_SUBNAME=//postgresql:5432/puppetdb
+ENV POSTGRES_USER=puppetdb
+ENV POSTGRES_PASSWORD=puppetdb
 
 ENV PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
 
@@ -28,14 +31,6 @@ RUN apt-get update \
 
 # Setting
 RUN puppet config set dns_alt_names puppetdb --section agent
-
-# TODO: use augeas
-RUN printf 'set /augeas/context /files//database.ini/database \n\
-  set subname "//postgresql:5432/puppetdb" \n\
-  set username "puppetdb" \n\
-  set password "puppetdb" \n\
-  print . \n\
-  ' | augtool -Ast "Puppet.lns incl /etc/puppetlabs/puppetdb/conf.d/database.ini"
 
 # things done by "puppetdb ssl-setup -f" at first run
 RUN printf 'set /augeas/context /files//jetty.ini/jetty \n\

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo -e "
+echo "
   set /augeas/context '/files//database.ini/database'
   set subname '${POSTGRES_SUBNAME}'
   set username '${POSTGRES_USER}'
@@ -16,7 +16,7 @@ if test -n "${POSTGRES_RO_SUBNAME}"; then
     POSTGRES_RO_PASSWORD=$POSTGRES_PASSWORD
   fi
 
-  echo -e "
+  echo "
     set /augeas/context '/files//database.ini/read-database'
     set subname '${POSTGRES_RO_SUBNAME}'
     set username '${POSTGRES_RO_USER}'

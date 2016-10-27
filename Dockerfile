@@ -12,7 +12,6 @@ ENV LANG=en_US.UTF-8
 
 ENV PUPPETDB_VERSION 4.2.2-1puppetlabs1
 
-ENV JACKSON_VERSION 2.5.4
 
 ENV PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
 

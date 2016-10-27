@@ -4,19 +4,19 @@ MAINTAINER mickael.canevet@camptocamp.com
 
 EXPOSE 8080 8081
 
-ENV RELEASE=jessie
+ENV RELEASE=jessie \
 
-ENV LANGUAGE=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-ENV LANG=en_US.UTF-8
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
 
-ENV PUPPETDB_VERSION 4.2.2-1puppetlabs1
+    PUPPETDB_VERSION=4.2.2-1puppetlabs1 \
 
-ENV POSTGRES_SUBNAME=//postgresql:5432/puppetdb
-ENV POSTGRES_USER=puppetdb
-ENV POSTGRES_PASSWORD=puppetdb
+    POSTGRES_SUBNAME=//postgresql:5432/puppetdb \
+    POSTGRES_USER=puppetdb \
+    POSTGRES_PASSWORD=puppetdb \
 
-ENV PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
+    PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
 
 RUN apt-get update \
   && apt-get install -y curl locales-all \

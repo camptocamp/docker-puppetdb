@@ -8,7 +8,7 @@ ENV RELEASE=jessie \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
 
-    PUPPETDB_VERSION=4.2.2-1puppetlabs1 \
+    PUPPETDB_VERSION=4.3.2-1puppetlabs1 \
 
     POSTGRES_SUBNAME=//postgresql:5432/puppetdb \
     POSTGRES_USER=puppetdb \

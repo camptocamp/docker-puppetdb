@@ -24,7 +24,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
-  && apt-get install -y puppetdb=$PUPPETDB_VERSION \
+  && apt-get install -y puppetdb=$PUPPETDB_VERSION puppet-agent \
   && rm -rf /var/lib/apt/lists/*
 
 # Setting

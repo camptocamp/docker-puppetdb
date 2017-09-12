@@ -38,13 +38,13 @@ RUN printf 'set /augeas/context /files//jetty.ini/jetty \n\
   set ssl-cert "/etc/puppetlabs/puppetdb/ssl/public.pem" \n\
   set ssl-ca-cert "/etc/puppetlabs/puppetdb/ssl/ca.pem" \n\
   print . \n\
-  ' | augtool -Ast "Puppet.lns incl /etc/puppetlabs/puppetdb/conf.d/jetty.ini"
+  ' | /opt/puppetlabs/puppet/bin/augtool -Ast "Puppet.lns incl /etc/puppetlabs/puppetdb/conf.d/jetty.ini"
 
 # Allow JAVA_ARGS tuning
 RUN printf 'set /augeas/context /files/etc/default/puppetdb \n\
   set JAVA_ARGS "${JAVA_ARGS:-1}" \n\
   print . \n\
-  ' | augtool -Ast "Shellvars.lns incl /etc/default/puppetdb"
+  ' | /opt/puppetlabs/puppet/bin/augtool -Ast "Shellvars.lns incl /etc/default/puppetdb"
 
 # Configure entrypoint
 COPY docker-entrypoint.sh /

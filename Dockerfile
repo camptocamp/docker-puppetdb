@@ -41,10 +41,7 @@ RUN printf 'set /augeas/context /files//jetty.ini/jetty \n\
   ' | /opt/puppetlabs/puppet/bin/augtool -Ast "Puppet.lns incl /etc/puppetlabs/puppetdb/conf.d/jetty.ini"
 
 # Allow JAVA_ARGS tuning
-RUN printf 'set /augeas/context /files/etc/default/puppetdb \n\
-  set JAVA_ARGS "${JAVA_ARGS:-1}" \n\
-  print . \n\
-  ' | /opt/puppetlabs/puppet/bin/augtool -Ast "Shellvars.lns incl /etc/default/puppetdb"
+RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
 # Configure entrypoint
 COPY docker-entrypoint.sh /

@@ -23,5 +23,8 @@ RUN apt-get update \
 # Allow JAVA_ARGS tuning
 RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
-ENTRYPOINT ["puppetdb"]
-CMD ["foreground"]
+# Configure entrypoint
+COPY docker-entrypoint.sh /
+COPY docker-entrypoint.d/* /docker-entrypoint.d/
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["puppetdb", "foreground"]

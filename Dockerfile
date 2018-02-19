@@ -2,11 +2,13 @@ FROM ubuntu:xenial
 
 EXPOSE 8080 8081
 
-ENV RELEASE=xenial \
+ENV RELEASE=xenial
+
+ENV \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    PUPPETDB_VERSION=5.1.4-1xenial \
+    PUPPETDB_VERSION=5.2.0-1${RELEASE} \
     PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
 
 RUN apt-get update \

@@ -25,7 +25,6 @@ elif test -n "${AUTOSIGN_PSK}"; then
 custom_attributes:
   1.2.840.113549.1.9.7: 'hashed;$(CERTNAME=$(puppet config print certname) ruby -e 'require "openssl"; print Digest::SHA256.base64digest(ENV["AUTOSIGN_PSK"] + "/" + ENV["CERTNAME"] + "/puppetdb/production")')'
 extension_requests:
-  pp_role: puppetdb
   pp_environment: production
 EOF
 

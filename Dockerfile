@@ -1,14 +1,15 @@
-FROM debian:jessie
+FROM ubuntu:bionic
 
 EXPOSE 8080 8081
 
-ENV RELEASE=jessie \
+ENV RELEASE=bionic
 
+ENV \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
 
-    PUPPETDB_VERSION=4.4.0-1puppetlabs1 \
+    PUPPETDB_VERSION=5.2.4-1${RELEASE} \
 
     POSTGRES_SUBNAME=//postgresql:5432/puppetdb \
     POSTGRES_USER=puppetdb \
@@ -18,13 +19,13 @@ ENV RELEASE=jessie \
 
 RUN apt-get update \
   && apt-get install -y curl locales-all \
-  && curl -O http://apt.puppetlabs.com/puppetlabs-release-pc1-${RELEASE}.deb \
-  && dpkg -i puppetlabs-release-pc1-${RELEASE}.deb \
-  && rm puppetlabs-release-pc1-${RELEASE}.deb \
+  && curl -O http://apt.puppet.com/puppet5-release-${RELEASE}.deb \
+  && dpkg -i puppet5-release-${RELEASE}.deb \
+  && rm puppet5-release-${RELEASE}.deb \
   && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
-  && apt-get install -y puppetdb=$PUPPETDB_VERSION puppet-agent \
+  && apt-get install -y puppetdb=$PUPPETDB_VERSION puppet-agent libreadline7 \
   && rm -rf /var/lib/apt/lists/*
 
 # Setting

@@ -49,4 +49,3 @@ RUN mkdir -p /.puppetlabs && chgrp -R 0 /.puppetlabs && chmod -R g=rwX /.puppetl
 COPY docker-entrypoint.sh /
 COPY docker-entrypoint.d/* /docker-entrypoint.d/
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["puppetdb", "foreground"]

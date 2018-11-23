@@ -23,6 +23,6 @@ COMMAND="${JAVA_BIN} ${JAVA_ARGS} ${LOG_APPENDER} \
          clojure.main -m puppetlabs.puppetdb.main \
          --config ${CONFIG} --bootstrap-config ${BOOTSTRAP_CONFIG} \
          --restart-file "${restartfile}" \
-         ${TK_ARGS}"
+         ${@}"
 
 exec ${COMMAND}

@@ -28,22 +28,20 @@ RUN apt-get update \
 # Setting
 RUN puppet config set dns_alt_names puppetdb --section agent
 
-# things done by "puppetdb ssl-setup -f" at first run
-RUN printf 'set /augeas/context /files//jetty.ini/jetty \n\
-  set ssl-host "0.0.0.0" \n\
-  set ssl-port "8081" \n\
-  set ssl-key "/etc/puppetlabs/puppetdb/ssl/private.pem" \n\
-  set ssl-cert "/etc/puppetlabs/puppetdb/ssl/public.pem" \n\
-  set ssl-ca-cert "/etc/puppetlabs/puppetdb/ssl/ca.pem" \n\
-  print . \n\
-  ' | /opt/puppetlabs/puppet/bin/augtool -Ast "Puppet.lns incl /etc/puppetlabs/puppetdb/conf.d/jetty.ini"
-
 # Allow JAVA_ARGS tuning
 RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
 RUN mkdir -p /.puppetlabs && chgrp -R 0 /.puppetlabs && chmod -R g=rwX /.puppetlabs \
-  && chgrp -R 0 /etc/puppetlabs && chmod -R g=rwX /etc/puppetlabs \
-  && chgrp -R 0 /opt/puppetlabs && chmod -R g=rwX /opt/puppetlabs
+  && chgrp -R 0 /etc/puppetlabs \
+  && chgrp -R 0 /opt/puppetlabs \
+  && chmod -R g=rwX /opt/puppetlabs/server/data/puppetdb
+
+RUN \
+  rm /etc/puppetlabs/puppetdb/conf.d/database.ini && \
+  rm /etc/puppetlabs/puppetdb/conf.d/jetty.ini
+
+RUN usermod -aG 0 -d / puppetdb
+USER puppetdb
 
 # Configure entrypoint
 COPY docker-entrypoint.sh /

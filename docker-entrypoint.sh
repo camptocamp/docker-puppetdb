@@ -9,10 +9,9 @@ fi
 
 set -a
 
-source /etc/default/puppetdb
-source "${INSTALL_DIR}/ezbake-functions.sh"
-
-
+INSTALL_DIR="/opt/puppetlabs/server/apps/puppetdb"
+JAVA_BIN="/usr/bin/java"
+BOOTSTRAP_CONFIG="/etc/puppetlabs/puppetdb/bootstrap.cfg"
 CLASSPATH="${INSTALL_DIR}/puppetdb.jar"
 LOG_APPENDER="-Dlogappender=STDOUT"
 restartfile="/opt/puppetlabs/server/data/puppetserver/restartcounter"

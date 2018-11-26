@@ -12,7 +12,9 @@ ENV \
     POSTGRES_SUBNAME=//postgresql:5432/puppetdb \
     POSTGRES_USER=puppetdb \
     POSTGRES_PASSWORD=puppetdb \
-    PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
+    PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH \
+	CONFIG=/etc/puppetlabs/puppetdb/conf.d \
+	JAVA_ARG=-Xmx192m
 
 RUN apt-get update \
   && apt-get install -y curl locales-all \

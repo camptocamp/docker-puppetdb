@@ -34,6 +34,7 @@ RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default
 RUN mkdir -p /.puppetlabs && chgrp -R 0 /.puppetlabs && chmod -R g=rwX /.puppetlabs \
   && chgrp -R 0 /etc/puppetlabs \
   && chgrp -R 0 /opt/puppetlabs \
+  && chmod -R g=u /etc/puppetlabs/puppet \
   && chmod -R g=rwX /opt/puppetlabs/server/data/puppetdb
 
 RUN \

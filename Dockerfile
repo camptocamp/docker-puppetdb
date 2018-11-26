@@ -49,6 +49,8 @@ RUN \
   rm /etc/puppetlabs/puppetdb/conf.d/database.ini && \
   rm /etc/puppetlabs/puppetdb/conf.d/jetty.ini
 
+VOLUME ["/opt/puppetlabs/server/data/puppetdb"]
+
 RUN usermod -aG 0 -d / puppetdb
 USER puppetdb
 

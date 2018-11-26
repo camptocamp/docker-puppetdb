@@ -31,11 +31,14 @@ RUN puppet config set dns_alt_names puppetdb --section agent
 # Allow JAVA_ARGS tuning
 RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
-RUN mkdir -p /.puppetlabs && chgrp -R 0 /.puppetlabs && chmod -R g=rwX /.puppetlabs \
+RUN mkdir -p /.puppetlabs/etc/puppet && chgrp -R 0 /.puppetlabs && chmod g=u -R /.puppetlabs \
   && chgrp -R 0 /etc/puppetlabs \
   && chgrp -R 0 /opt/puppetlabs \
   && chmod -R g=u /etc/puppetlabs/puppet \
-  && chmod -R g=rwX /opt/puppetlabs/server/data/puppetdb
+  && chmod -R g=u /opt/puppetlabs/server/data/puppetdb
+
+RUN echo "confdir = /etc/puppetlabs/puppet" > /.puppetlabs/etc/puppet/puppet.conf
+RUN echo "ssldir = /etc/puppetlabs/puppet/ssl" >> /.puppetlabs/etc/puppet/puppet.conf
 
 RUN \
   rm /etc/puppetlabs/puppetdb/conf.d/database.ini && \

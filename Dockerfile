@@ -1,34 +1,23 @@
-FROM ubuntu:bionic
+FROM centos:7
 
 EXPOSE 8080 8081
 
-ENV RELEASE=bionic
+ENV RELEASE=el-7
 
 ENV \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    PUPPETDB_VERSION=5.2.6-1${RELEASE} \
-    POSTGRES_SUBNAME=//postgresql:5432/puppetdb \
-    POSTGRES_USER=puppetdb \
-    POSTGRES_PASSWORD=puppetdb \
+    PUPPETDB_VERSION=6.0.1-1.el7 \
     PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH \
 	CONFIG=/etc/puppetlabs/puppetdb/conf.d \
 	JAVA_ARG=-Xmx192m
 
-RUN apt-get update \
-  && apt-get install -y curl locales-all \
-  && curl -O http://apt.puppetlabs.com/puppet5-release-${RELEASE}.deb \
-  && dpkg -i puppet5-release-${RELEASE}.deb \
-  && rm puppet5-release-${RELEASE}.deb \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update \
-  && apt-get install -y puppetdb=$PUPPETDB_VERSION puppet-agent libreadline7 \
-  && rm -rf /var/lib/apt/lists/*
-
-# Allow JAVA_ARGS tuning
-RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
+RUN yum install -y http://yum.puppet.com/puppet6/puppet-release-${RELEASE}.noarch.rpm && \
+    yum install -y puppetdb-$PUPPETDB_VERSION puppet-agent && \
+	yum install -y crontabs && \
+	yum clean all && \
+	rm -rf /var/cache/yum
 
 RUN mkdir -p /.puppetlabs/etc/puppet && chgrp -R 0 /.puppetlabs && chmod g=u -R /.puppetlabs \
   && chgrp -R 0 /etc/puppetlabs \

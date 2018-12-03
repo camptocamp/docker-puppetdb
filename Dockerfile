@@ -27,9 +27,6 @@ RUN apt-get update \
   && apt-get install -y puppetdb=$PUPPETDB_VERSION puppet-agent libreadline7 \
   && rm -rf /var/lib/apt/lists/*
 
-# Setting
-RUN puppet config set dns_alt_names puppetdb --section agent
-
 # Allow JAVA_ARGS tuning
 RUN sed -i -e 's@^JAVA_ARGS=\(.*\)$@JAVA_ARGS=\$\{JAVA_ARGS:-\1\}@' /etc/default/puppetdb
 
@@ -44,6 +41,7 @@ RUN mkdir -p /.puppetlabs/etc/puppet && chgrp -R 0 /.puppetlabs && chmod g=u -R 
 
 RUN echo "confdir = /etc/puppetlabs/puppet" > /.puppetlabs/etc/puppet/puppet.conf
 RUN echo "ssldir = /etc/puppetlabs/puppet/ssl" >> /.puppetlabs/etc/puppet/puppet.conf
+RUN echo "dns_alt_names = puppetdb" >> /.puppetlabs/etc/puppet/puppet.conf
 
 RUN \
   rm /etc/puppetlabs/puppetdb/conf.d/database.ini && \

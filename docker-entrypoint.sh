@@ -4,7 +4,7 @@ DIR=/docker-entrypoint.d
 
 if [[ -d "$DIR" ]]
 then
-  /bin/run-parts --regex '\.(sh|rb)$' "$DIR"
+  /bin/run-parts "$DIR"
 fi
 
 set -a

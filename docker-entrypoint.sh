@@ -14,7 +14,7 @@ JAVA_BIN="/usr/bin/java"
 BOOTSTRAP_CONFIG="/etc/puppetlabs/puppetdb/bootstrap.cfg"
 CLASSPATH="${INSTALL_DIR}/puppetdb.jar"
 LOG_APPENDER="-Dlogappender=STDOUT"
-restartfile="/opt/puppetlabs/server/data/puppetserver/restartcounter"
+restartfile="/opt/puppetlabs/server/data/puppetdb/restartcounter"
 
 COMMAND="${JAVA_BIN} ${JAVA_ARGS} ${LOG_APPENDER} \
          -Djava.security.egd=/dev/urandom \

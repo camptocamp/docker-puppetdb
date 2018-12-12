@@ -34,10 +34,7 @@ RUN mkdir -p /.puppetlabs/etc/puppet && chgrp -R 0 /.puppetlabs && chmod g=u -R 
   && chgrp -R 0 /etc/puppetlabs \
   && chgrp -R 0 /opt/puppetlabs \
   && chmod -R g=u /etc/puppetlabs/puppet \
-  && chmod -R g=u /opt/puppetlabs/server/data/puppetdb \
-  && mkdir /opt/puppetlabs/server/data/puppetserver \
-  && chgrp -R 0 /opt/puppetlabs/server/data/puppetserver \
-  && chmod -R g=u /opt/puppetlabs/server/data/puppetserver
+  && chmod -R g=u /opt/puppetlabs/server/data/puppetdb
 
 RUN echo "confdir = /etc/puppetlabs/puppet" > /.puppetlabs/etc/puppet/puppet.conf
 RUN echo "ssldir = /etc/puppetlabs/puppet/ssl" >> /.puppetlabs/etc/puppet/puppet.conf

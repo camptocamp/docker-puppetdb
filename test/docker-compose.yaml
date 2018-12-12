@@ -1,0 +1,31 @@
+version: "3.1"
+services:
+  puppetdb:
+    build: ..
+    image: camptocamp/puppetdb:latest
+    hostname: puppetdb.camptocamp.com
+    user: "123456780"
+    volumes:
+      - ./configmaps/database.ini:/etc/puppetlabs/puppetdb/conf.d/database.ini
+      - ./configmaps/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini
+    secrets:
+      - ca.pem
+      - private.pem
+      - public.pem
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:9.6.11
+    environment:
+      POSTGRES_USER: puppetdb
+      POSTGRES_PASSWORD: puppetdb
+      POSTGRES_DB: puppetdb
+
+secrets:
+  ca.pem:
+    file: secrets/ca.pem
+  private.pem:
+    file: secrets/private.pem
+  public.pem:
+    file: secrets/public.pem

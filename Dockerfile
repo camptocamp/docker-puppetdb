@@ -20,6 +20,8 @@ RUN yum install -y http://yum.puppet.com/puppet6/puppet-release-${RELEASE}.noarc
 	rm -rf /var/cache/yum
 
 RUN mkdir -p /.puppetlabs/etc/puppet && chgrp -R 0 /.puppetlabs && chmod g=u -R /.puppetlabs \
+  && mkdir -p /etc/puppetlabs/puppet/ssl \
+  && chgrp 0 -R /etc/puppetlabs/puppet/ssl && chmod -R 0771 /etc/puppetlabs/puppet/ssl \
   && chgrp -R 0 /etc/puppetlabs \
   && chgrp -R 0 /opt/puppetlabs \
   && chmod -R g=u /etc/puppetlabs/puppet \
@@ -36,7 +38,7 @@ RUN \
   rm /etc/puppetlabs/puppetdb/conf.d/database.ini && \
   rm /etc/puppetlabs/puppetdb/conf.d/jetty.ini
 
-VOLUME ["/opt/puppetlabs/server/data/puppetdb"]
+VOLUME ["/etc/puppetlabs/puppet/ssl", "/opt/puppetlabs/server/data/puppetdb"]
 
 RUN usermod -aG 0 -d / puppetdb
 USER puppetdb

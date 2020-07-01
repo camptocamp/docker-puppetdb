@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=/opt/puppetlabs/puppet/bin:$PATH
+
 if test -n "${AUTOSIGN_PSK}"; then
   # Generate csr_attributes.yaml
   cat << EOF > /etc/puppetlabs/puppet/csr_attributes.yaml
